@@ -1,12 +1,10 @@
 <template>
   <div id="app">
     <!-- nav bar -->
-    <nav class="navbar" role="navigation" aria-label="main navigation"
-    style="background: linear-gradient(180deg, #32AFA9 0%, rgba(50, 168, 175, 0.6) 100%);
-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item is-size-4">
-          Home
+          YouBlog
         </router-link>
 
         <a
@@ -52,38 +50,38 @@ box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
               <strong>Signup</strong>
             </router-link>
           </div>
-          <div v-if="!user" class="navbar-item">
-            <router-link to="/allProduct">
-              <strong>AllProduct</strong>
-            </router-link>
-          </div>
-          <div v-if="!user" class="navbar-item">
-            <router-link to="/manageProduct">
-              <strong>Product</strong>
-            </router-link>
-          </div>
         </div>
       </div>
     </nav>
     
-    <router-view :key="$route.fullPath"/>
+    <router-view :key="$route.fullPath" @auth-change="onAuthChange" :user="user" />
   </div>
 </template>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Anuphan');
-  #app,button,option{
-    font-family: 'Anuphan';
-    /* background-color: #E5FDD1; */
-  }
-</style>
-
 <script>
+import axios from '@/plugins/axios'
 export default {
   data () {
     return {
       user: null
     }
-  }
+  },
+   mounted () {
+     this.onAuthChange()
+   },
+   methods: {
+     onAuthChange () {
+       const token = localStorage.getItem('token')
+       if (token) {
+         this.getUser()
+       }
+     },
+     getUser () {
+      // const token = localStorage.getItem('token')
+      axios.get('/user/me').then(res => {
+         this.user = res.data
+       })
+     },
+   }
 }
 </script>

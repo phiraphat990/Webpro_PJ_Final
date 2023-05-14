@@ -97,7 +97,7 @@
                         Like ({{comment.like}})
                       </a>
                     </div>
-                    <div class="level-right">
+                    <div class="level-right" v-if="isAdmin(comment)">
                       <div class="level-item">
                         <button
                           @click="editToggle = index; editCommentMessage = comment.comment"
@@ -128,7 +128,7 @@
           </div>
           <footer class="card-footer">
             <router-link class="card-footer-item" to="/">To Home Page</router-link>
-            <a class="card-footer-item" @click="deleteBlog">
+            <a v-if="isBlogOwner(blog)" class="card-footer-item" @click="deleteBlog">
               <span>Delete this blog</span>
             </a>
           </footer>
@@ -142,6 +142,7 @@
 import axios from "axios";
 
 export default {
+  props: ['user'],
   data() {
     return {
       blog: {},
@@ -237,6 +238,23 @@ export default {
           });
       }
     },
+
+    isBlogOwner (blog) {
+          if (this.user.role === 'admin') {
+            return true
+          }else if(!this.user){
+            return false
+          }
+          return blog.create_by_id === this.user.id
+      },
+    isAdmin (comment) {
+          if (this.user.role === 'admin') {
+            return true
+          }else if(!this.user){
+            return false
+          }
+          return comment.comment_by_id === this.user.id;
+      }
   },
 };
 </script>

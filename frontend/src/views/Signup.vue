@@ -1,50 +1,84 @@
 <template>
   <div>
-    <div class="container is-fluid mt-6">
+    <div class="container is-fluid mt-5">
       <div class="columns is-centered">
+        <div class="column is-8">
+          <h1 class="title">Welcome</h1>
+          <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo quae
+            rem ipsum praesentium, tenetur doloremque libero. Fugit, dolore
+            possimus molestias cupiditate iste deserunt! Aut aliquid rem quas
+            consequatur non iste.
+          </p>
+        </div>
         <div class="column is-4">
-          <h1 class="title has-text-centered is-size-1 has-text-weight-bold">Sign Up</h1>
-          <div class="column is-half">
-            <div class="control">
-              <label class="radio">
-                <input type="radio" name="role" value="seller" v-model="role" />
-                Seller
-                <input type="radio" name="role" value="customer" v-model="role"/>
-                Customer
-              </label>
-            </div>
-          </div>
+          <h1 class="title">Sign Up</h1>
           <!-- Sign up form -->
           <div class="field">
-            <label class="label">First Name</label>
-            <div class="control has-icons-left has-icons-right">
+            <label class="label">Username</label>
+            <div class="control has-icons-left">
               <input
-                v-model="$v.first_name.$model"
-                :class="{ 'is-danger': $v.first_name.$error }"
+                v-model="$v.username.$model"
+                :class="{ 'is-danger': $v.username.$error }"
                 class="input"
                 type="text"
               />
+              <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+              </span>
             </div>
-            <template v-if="$v.first_name.$error">
-              <p class="help is-danger" v-if="!$v.first_name.required">
+            <template v-if="$v.username.$error">
+              <p class="help is-danger" v-if="!$v.username.required">
                 This field is required
+              </p>
+              <p class="help is-danger" v-if="!$v.username.minLength">
+                Must be at least 5 characters
               </p>
             </template>
           </div>
 
           <div class="field">
-            <label class="label">Last Name</label>
+            <label class="label">Password</label>
             <div class="control has-icons-left has-icons-right">
               <input
-                v-model="$v.last_name.$model"
-                :class="{ 'is-danger': $v.last_name.$error }"
+                v-model="$v.password.$model"
+                :class="{ 'is-danger': $v.password.$error }"
                 class="input"
-                type="text"
+                type="password"
               />
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
             </div>
-            <template v-if="$v.last_name.$error">
-              <p class="help is-danger" v-if="!$v.last_name.required">
+            <template v-if="$v.password.$error">
+              <p class="help is-danger" v-if="!$v.password.required">
                 This field is required
+              </p>
+              <p class="help is-danger" v-if="!$v.password.minLength">
+                Must be at least 8 character
+              </p>
+              <p class="help is-danger" v-if="!$v.password.complex">
+                Password too easy
+              </p>
+            </template>
+          </div>
+
+          <div class="field">
+            <label class="label">Confirm Password</label>
+            <div class="control has-icons-left has-icons-right">
+              <input
+                v-model="$v.confirm_password.$model"
+                :class="{ 'is-danger': $v.confirm_password.$error }"
+                class="input"
+                type="password"
+              />
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+            </div>
+            <template v-if="$v.confirm_password.$error">
+              <p class="help is-danger" v-if="!$v.confirm_password.sameAs">
+                Password not match
               </p>
             </template>
           </div>
@@ -94,84 +128,40 @@
           </div>
 
           <div class="field">
-            <label class="label">Username</label>
-            <div class="control has-icons-left">
+            <label class="label">First Name</label>
+            <div class="control has-icons-left has-icons-right">
               <input
-                v-model="$v.username.$model"
-                :class="{ 'is-danger': $v.username.$error }"
+                v-model="$v.first_name.$model"
+                :class="{ 'is-danger': $v.first_name.$error }"
                 class="input"
                 type="text"
               />
-              <span class="icon is-small is-left">
-                <i class="fas fa-user"></i>
-              </span>
             </div>
-            <template v-if="$v.username.$error">
-              <p class="help is-danger" v-if="!$v.username.required">
+            <template v-if="$v.first_name.$error">
+              <p class="help is-danger" v-if="!$v.first_name.required">
                 This field is required
-              </p>
-              <p class="help is-danger" v-if="!$v.username.minLength">
-                Must be at least 5 characters
-              </p>
-            </template>
-          </div>
-
-          <div class="field ">
-            <label class="label">Password</label>
-            <div class="control has-icons-left has-icons-right">
-              <input
-                v-model="$v.password.$model"
-                :class="{ 'is-danger': $v.password.$error }"
-                class="input"
-                type="password"
-              />
-              <span class="icon is-small is-left">
-                <i class="fas fa-lock"></i>
-              </span>
-            </div>
-            <template v-if="$v.password.$error">
-              <p class="help is-danger" v-if="!$v.password.required">
-                This field is required
-              </p>
-              <p class="help is-danger" v-if="!$v.password.minLength">
-                Must be at least 8 character
-              </p>
-              <p class="help is-danger" v-if="!$v.password.complex">
-                Password too easy
               </p>
             </template>
           </div>
 
           <div class="field">
-            <label class="label">Confirm Password</label>
-            <div class="control has-icons-left has-icons-right ">
+            <label class="label">Last Name</label>
+            <div class="control has-icons-left has-icons-right">
               <input
-                v-model="$v.confirm_password.$model"
-                :class="{ 'is-danger': $v.confirm_password.$error }"
+                v-model="$v.last_name.$model"
+                :class="{ 'is-danger': $v.last_name.$error }"
                 class="input"
-                type="password"
+                type="text"
               />
-              <span class="icon is-small is-left">
-                <i class="fas fa-lock"></i>
-              </span>
             </div>
-            <template v-if="$v.confirm_password.$error">
-              <p class="help is-danger" v-if="!$v.confirm_password.sameAs">
-                Password not match
+            <template v-if="$v.last_name.$error">
+              <p class="help is-danger" v-if="!$v.last_name.required">
+                This field is required
               </p>
             </template>
           </div>
 
-
-          <!-- <button class="button is-primary is-fullwidth" @click="submit()">
-            Sign Up
-          </button> -->
-
-          <div class="control has-text-centered">
-            <button class="button has-background-success-dark has-text-white has-text-weight-bold is-rounded" @click="submit()"> 
-              <router-link to="/login" class="has-text-black"> Sign Up</router-link>
-            </button>
-          </div>
+          <button class="button is-primary is-fullwidth" @click="submit()">Sign Up</button>
 
           <p class="my-3">Already have an account? <a href="#">Login</a></p>
         </div>
@@ -181,7 +171,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from '@/plugins/axios'
 import {
   required,
   email,
@@ -237,7 +227,7 @@ export default {
             alert("Sign up Success");
           })
           .catch((err) => {
-            alert(err.response.data.details.message);
+            alert(err.response.data.details.message)
           });
       }
     },

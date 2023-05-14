@@ -1,9 +1,18 @@
-<template >
-  <div>
-  <div class="container is-fluid mt-6">
+<template>
+  <div class="container is-fluid mt-5">
     <div class="columns is-centered">
+      <div class="column is-8">
+        <h1 class="title">Welcome</h1>
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo quae
+          rem ipsum praesentium, tenetur doloremque libero. Fugit, dolore
+          possimus molestias cupiditate iste deserunt! Aut aliquid rem quas
+          consequatur non iste.
+        </p>
+      </div>
+
       <div class="column is-4">
-        <h1 class="title has-text-centered is-size-1 has-text-weight-bold">Log in</h1>
+        <h1 class="title">Log in</h1>
 
         <p
           v-if="error"
@@ -36,23 +45,9 @@
           </div>
         </div>
 
-        <!-- <button class="button is-primary is-fullwidth">
+        <button class="button is-primary is-fullwidth" @click="submit">
           Login
-        </button> -->
-      <div>
-        <p class="has-text-centered mt-1 mb-4">Forgot your password?</p>
-      </div>
-        
-      <div class="has-text-centered">
-        <button class="button has-background-success-dark has-text-weight-bold is-rounded" @click="loginCustomer()">
-          Login Customer
         </button>
-      </div>
-      <div class="has-text-centered mt-4">
-        <button class="button has-background-success-dark has-text-weight-bold is-rounded" @click="loginSeller()">
-          login Seller
-        </button>
-      </div>
 
         <p class="my-3">
           Don't have an account yet? <a href="/signup.html">Sign up</a>
@@ -60,10 +55,10 @@
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
+import axios from '@/plugins/axios'
 export default {
   data () {
     return {
@@ -71,6 +66,26 @@ export default {
       password: '',
       error: ''
     }
-  }
+  },
+   methods: {
+     submit () {
+       const data = {
+         username: this.username,
+         password: this.password
+       }
+ 
+       axios.post('http://localhost:3000/user/login/', data)
+         .then(res => {
+           const token = res.data.token                                
+           localStorage.setItem('token', token)
+           this.$emit('auth-change')
+           this.$router.push({path: '/'})
+         })
+         .catch(error => {
+           this.error = error.response.data
+           console.log(error.response.data)
+         })
+     }
+   }
 }
 </script>

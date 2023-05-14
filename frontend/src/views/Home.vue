@@ -1,25 +1,71 @@
 <template>
- <div style="background-color: #f9f7f0">
-      <section class="hero is-small has-text-centered">
-        <div class="p-6">
-            <p class="title is-size-1" style="color: #63b224;">
-              Plants Store Web Application.
-            </p>
-            <img src="../assets/Homepage.png" alt="Homepage" style="width: 75%;"/>
-            <p class="title is-size-3 mt-5 p-2">Why Shop at The Plant Store?</p>
-            <p class="subtitle mt-3">
-              At The Plant Store we put an emphasis on Plants, Prices, Community, Education and Mental Health.
-            </p>
+  <div class="container is-widescreen">
+    <section class="hero">
+      <div class="hero-body">
+        <p class="title">My Stories</p>
+        <div class="columns">
+          <div class="column is-half">
+            <input class="input" type="text" v-model="search" placeholder="Search blog(s)" />
+          </div>
+          <div class="column is-half">
+            <button @click="getBlogs" class="button">Search</button>
+          </div>
         </div>
-      </section>
+      </div>
+    </section>
+    <section class="section" id="app">
+      <div class="content">
+        <div class="columns is-multiline">
+          <div class="column is-3" v-for="blog in blogs" :key="blog.id">
+            <div class="card">
+              <div class="card-image pt-5">
+                <figure class="image">
+                  <img
+                    style="height: 120px"
+                    :src="imagePath(blog.file_path)"
+                    alt="Placeholder image"
+                  />
+                </figure>
+              </div>
+              <div class="card-content">
+                <div class="title">{{ blog.title }}</div>
+                <div class="content" style="height: 200px;">{{ shortContent(blog.content) }}</div>
+              </div>
+              <footer class="card-footer">
+                <router-link class="card-footer-item" :to="`/blogs/detail/${blog.id}`">Read more...</router-link>
+                <a 
+                class="card-footer-item" @click="addLike(blog.id)">
+                  <span class="icon-text">
+                    <span class="icon">
+                      <i class="far fa-heart"></i>
+                    </span>
+                    <span>Like ({{blog.like}})</span>
+                  </span>
+                </a>
+                <a
+                  v-if="isBlogOwner(blog)"
+                  class="card-footer-item"
+                  @click="$router.push({name:'update-blog',params:{id:blog.id}})"
+                >
+                  <span class="icon-text">
+                    <span>Edit</span>
+                  </span>
+                </a>
+              </footer>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import axios from '@/plugins/axios'
 // @ is an alias to /src
 export default {
   name: "Home",
+  props: ['user'],
   data() {
     return {
       search: "",
@@ -68,6 +114,11 @@ export default {
           console.log(err);
         });
     },
+
+   isBlogOwner (blog) {
+          if (!this.user) return false
+          return blog.create_by_id === this.user.id
+      }
   },
 };
 </script>
