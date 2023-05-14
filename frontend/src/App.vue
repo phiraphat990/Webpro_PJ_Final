@@ -1,10 +1,12 @@
 <template>
   <div id="app">
     <!-- nav bar -->
-    <nav class="navbar" role="navigation" aria-label="main navigation">
+    <nav class="navbar" role="navigation" aria-label="main navigation"
+    style="background: linear-gradient(180deg, #32AFA9 0%, rgba(50, 168, 175, 0.6) 100%);
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item is-size-4">
-          YouBlog
+          Home
         </router-link>
 
         <a
@@ -50,6 +52,16 @@
               <strong>Signup</strong>
             </router-link>
           </div>
+          <div v-if="!user" class="navbar-item">
+            <router-link to="/allProduct">
+              <strong>AllProduct</strong>
+            </router-link>
+          </div>
+          <div v-if="!user" class="navbar-item">
+            <router-link to="/manageProduct">
+              <strong>Product</strong>
+            </router-link>
+          </div>
         </div>
       </div>
     </nav>
@@ -57,6 +69,14 @@
     <router-view :key="$route.fullPath"/>
   </div>
 </template>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Anuphan');
+  #app,button,option{
+    font-family: 'Anuphan';
+    /* background-color: #E5FDD1; */
+  }
+</style>
 
 <script>
 export default {

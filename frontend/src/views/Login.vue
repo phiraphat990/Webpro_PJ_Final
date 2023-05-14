@@ -1,18 +1,9 @@
-<template>
-  <div class="container is-fluid mt-5">
+<template >
+  <div>
+  <div class="container is-fluid mt-6">
     <div class="columns is-centered">
-      <div class="column is-8">
-        <h1 class="title">Welcome</h1>
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo quae
-          rem ipsum praesentium, tenetur doloremque libero. Fugit, dolore
-          possimus molestias cupiditate iste deserunt! Aut aliquid rem quas
-          consequatur non iste.
-        </p>
-      </div>
-
       <div class="column is-4">
-        <h1 class="title">Log in</h1>
+        <h1 class="title has-text-centered is-size-1 has-text-weight-bold">Log in</h1>
 
         <p
           v-if="error"
@@ -45,9 +36,23 @@
           </div>
         </div>
 
-        <button class="button is-primary is-fullwidth">
+        <!-- <button class="button is-primary is-fullwidth">
           Login
+        </button> -->
+      <div>
+        <p class="has-text-centered mt-1 mb-4">Forgot your password?</p>
+      </div>
+        
+      <div class="has-text-centered">
+        <button class="button has-background-success-dark has-text-weight-bold is-rounded" @click="loginCustomer()">
+          Login Customer
         </button>
+      </div>
+      <div class="has-text-centered mt-4">
+        <button class="button has-background-success-dark has-text-weight-bold is-rounded" @click="loginSeller()">
+          login Seller
+        </button>
+      </div>
 
         <p class="my-3">
           Don't have an account yet? <a href="/signup.html">Sign up</a>
@@ -55,6 +60,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script>

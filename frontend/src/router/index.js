@@ -33,6 +33,16 @@ const routes = [
     path: '/user/login',
     name: 'login',
     component: () => import('../views/Login.vue')
+  },
+  {
+      path: '/allProduct',
+      name: 'AllProduct',
+      component: () => import('../views/product/AllProduct.vue') // set home as path '/'
+  },
+  {
+      path: '/manageProduct',
+      name: 'Manageproduct',
+      component: () => import('../views/product/ManageProduct.vue') // set home as path '/'
   }
 ]
 
