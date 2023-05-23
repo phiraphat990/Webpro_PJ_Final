@@ -168,7 +168,7 @@ export default {
         )
         .then((response) => {
           console.log(response);
-          this.$router.push({ path: "/" });
+          this.$router.push({ path: "/mainblog" });
         })
         .catch((e) => {
           console.log(e);
@@ -181,7 +181,7 @@ export default {
           .delete("http://localhost:3000/image/" + imageId)
           .then((response) => {
             console.log("delete image ", response);
-            this.$router.push({ path: "/" });
+            this.$router.push({ path: "/mainblog" });
           })
           .catch((e) => {
             console.log(e);
@@ -205,7 +205,7 @@ export default {
         .put("http://localhost:3000/blogs/" + this.$route.params.id, formData)
         .then((res) => {
           console.log(res);
-          this.$router.push({ path: "/" });
+          this.$router.push({ path: "/mainblog" });
         })
         .catch((e) => console.log(e));
     },

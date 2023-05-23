@@ -19,12 +19,23 @@ const blogRouter = require('./routes/blog')
 const commentRouter = require('./routes/comment')
 const imageRouter = require('./routes/image')
 const userRouter = require('./routes/user')
+//ใหม่
+const manageRouter = require('./routes/manage')
+const productRouter = require('./routes/product')
+const cartRouter = require('./routes/cart')
+const orderRouter = require('./routes/order')
+
 
 app.use(indexRouter.router)
 app.use(blogRouter.router)
 app.use(commentRouter.router)
 app.use(imageRouter.router)
 app.use(userRouter.router)
+//ใหม่
+app.use(manageRouter.router)
+app.use(productRouter.router)
+app.use(cartRouter.router)
+app.use(orderRouter.router)
 
 app.listen(3000, () => {
   console.log(`Example app listening at http://localhost:3000`)

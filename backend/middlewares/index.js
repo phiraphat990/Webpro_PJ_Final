@@ -34,7 +34,7 @@ async function isLoggedIn (req, res, next) {
         next()
     }
 
-    module.exports = {
+    module.exports = { 
         logger,
         isLoggedIn
     }

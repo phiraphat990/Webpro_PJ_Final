@@ -37,6 +37,50 @@ const routes = [
     name: 'login',
     meta: { guess: true },
     component: () => import('../views/Login.vue')
+  },
+  //ใหม่
+  {
+      path: '/manageProduct',
+      name: 'Manageproduct',
+      meta: { login: true },
+      component: () => import('../views/product/ManageProduct.vue') // set home as path '/'
+  },
+  {
+      path: '/user/manage',
+      name: 'ManageAccount',
+      component: () => import('../views/ManageAccount.vue') // set home as path '/'
+  }
+  ,
+  {
+      path: '/product/add',
+      name: 'addProduct',
+      component: () => import('../views/product/addProduct.vue') // set home as path '/'
+  }
+  ,
+  {
+      path: '/product/edit/:id',
+      name: 'editProduct',
+      component: () => import('../views/product/editProduct.vue') // set home as path '/'
+  },
+  {
+    path: '/payment',
+    name: 'Payment',
+    component: () => import('../views/product/Payment.vue') // set home as path '/'
+  },
+  {
+    path: '/itemsInCart/:id',
+    name: 'itemsInCart',
+    component: () => import('../views/product/Cart.vue') // set home as path '/'
+  },
+  {
+    path: '/mainblog',
+    name: 'Mainblog',
+    component: () => import('../views/blogs/MainBlog.vue') // set home as path '/'
+  },
+  {
+    path: '/checkorder',
+    name: 'CheckOrder',
+    component: () => import('../views/product/CheckOrder.vue') // set home as path '/'
   }
 ]
 

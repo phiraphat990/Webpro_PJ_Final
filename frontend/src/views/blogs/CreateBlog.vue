@@ -138,7 +138,7 @@ export default {
 
       axios
         .post("http://localhost:3000/blogs", formData)
-        .then((res) => this.$router.push({name: 'home'}))
+        .then((res) => this.$router.push({path: '/mainblog'}))
         .catch((e) => console.log(e.response.data));
     },
   },

@@ -35,9 +35,11 @@ const signupSchema = Joi.object({
     password: Joi.string().required().custom(passwordValidator),
     confirm_password: Joi.string().required().valid(Joi.ref('password')),
     username: Joi.string().required().min(5).max(20).external(usernameValidator),
+    role: Joi.string().required()
 })
 
-router.post('/user/signup', async (req, res, next) => {
+// sign up seller
+router.post('/seller/signup', async (req, res, next) => {
     try {
         await signupSchema.validateAsync(req.body, { abortEarly: false })
     } catch (err) {
@@ -53,11 +55,19 @@ router.post('/user/signup', async (req, res, next) => {
     const last_name = req.body.last_name
     const email = req.body.email
     const mobile = req.body.mobile
+    const role = req.body.role;
 
     try {
+        let selSignup = await conn.query(
+            'INSERT INTO users(username, password, first_name, last_name, email, mobile, role) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [username, password, first_name, last_name, email, mobile, role]
+        )
+        const selID = selSignup[0].insertId //gen auto id
+
         await conn.query(
-            'INSERT INTO users(username, password, first_name, last_name, email, mobile) VALUES (?, ?, ?, ?, ?, ?)',
-            [username, password, first_name, last_name, email, mobile]
+            'INSERT INTO seller (id)' + //insert ข้อมูลเข้าตาราง seller ในdatabase
+            'VALUES (?)',
+            [selID]
         )
         conn.commit()
         res.status(201).send()
@@ -68,6 +78,54 @@ router.post('/user/signup', async (req, res, next) => {
         conn.release()
     }
 })
+
+// sign up customer
+router.post('/customer/signup', async (req, res, next) => {
+    try {
+        await signupSchema.validateAsync(req.body, { abortEarly: false })
+    } catch (err) {
+        return res.status(400).send(err)
+    }
+
+    const conn = await pool.getConnection()
+    await conn.beginTransaction()
+
+    const username = req.body.username
+    const password = await bcrypt.hash(req.body.password, 5)
+    const first_name = req.body.first_name
+    const last_name = req.body.last_name
+    const email = req.body.email
+    const mobile = req.body.mobile
+    const role = req.body.role;
+
+    try {
+        let cusSignup = await conn.query(
+            'INSERT INTO users(username, password, first_name, last_name, email, mobile, role) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [username, password, first_name, last_name, email, mobile, role]
+        )
+
+        const cusID = cusSignup[0].insertId
+        await conn.query(
+            'INSERT INTO customer (id)' + //insert ข้อมูลเข้าตาราง customer ในdatabase
+            'VALUES (?)',
+            [cusID]
+        )
+        // await conn.query(
+        //     'INSERT INTO cart(customer_id)' + //insert ข้อมูลเข้าตาราง customer ในdatabase
+        //     'VALUES (?)',
+        //     [cusID]
+        // )
+        conn.commit()
+        res.status(201).send()
+    } catch (err) {
+        conn.rollback()
+        res.status(400).json(err.toString());
+    } finally {
+        conn.release()
+    }
+})
+
+
 
 const loginSchema = Joi.object({
         username: Joi.string().required(),

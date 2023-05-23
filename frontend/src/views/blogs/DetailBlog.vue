@@ -127,7 +127,7 @@
             </div>
           </div>
           <footer class="card-footer">
-            <router-link class="card-footer-item" to="/">To Home Page</router-link>
+            <router-link class="card-footer-item" to="/mainblog">To Home Page</router-link>
             <a v-if="isBlogOwner(blog)" class="card-footer-item" @click="deleteBlog">
               <span>Delete this blog</span>
             </a>
@@ -240,7 +240,7 @@ export default {
     },
 
     isBlogOwner (blog) {
-          if (this.user.role === 'admin') {
+          if (this.user.role === 'seller') {
             return true
           }else if(!this.user){
             return false
@@ -248,7 +248,7 @@ export default {
           return blog.create_by_id === this.user.id
       },
     isAdmin (comment) {
-          if (this.user.role === 'admin') {
+          if (this.user.role === 'seller') {
             return true
           }else if(!this.user){
             return false
